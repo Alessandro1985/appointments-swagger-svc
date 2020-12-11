@@ -1,0 +1,62 @@
+swagger: "2.0"
+
+info:
+  version: "0.1"
+  title: Appointments Service
+  description: A service for showing and creating appointments
+  contact:
+    email: "alessandro.morsiani@live.it"
+
+schemes:
+  - http
+basePath: nakedwines/v0/
+
+paths:
+  /appointments:
+    get:
+      summary: "Get all the appointments ordered by date"
+      operationId: "getAppointments"
+      produces:
+        - "application/json; charset=utf-8"
+      responses:
+        200:
+          description: "Successfully found appointments"
+          schema:
+            $ref: "#/definitions/Appointments"
+  /appointments/create:
+    post:
+      summary: "Create an appointment"
+      operationId: "createAppointment"
+      consumes:
+        - "application/json; charset=utf-8"
+      produces:
+        - "application/json; charset=utf-8"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "New appointment to create"
+          required: true
+          schema:
+            $ref: "#/definitions/Appointment"
+      responses:
+        201:
+          description: "Appointment has been successfully created"
+definitions:
+  Appointments:
+    type: "object"
+    properties:
+      appointments:
+        type: "array"
+        items:
+          $ref: "#/definitions/Appointment"
+  Appointment:
+    type: "object"
+    required:
+      - description
+      - date
+    properties:
+      description:
+        type: 'string'
+        description: 'the appointment description'
+        example: 'wine festival'
+
